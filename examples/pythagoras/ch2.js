@@ -1,6 +1,7 @@
-/* ============ 第 2 階段　5–15 分鐘　核心概念講解與示範 ============
+/* ============ 第 2 階段　5–15 分鐘　看動畫，發現新規律（教案：核心概念講解與示範） ============
    課型：新課講授（範例：八年級 畢氏定理）
-   本階段小節：2-1 概念探索、2-2 示範例題、2-3 理解檢查
+   本階段小節：2-1 粵語動畫、2-2 動手探索、2-3 跟著做一次、2-4 快問快答
+   2-1 粵語語音：audio/s1～s5.mp3（由 scripts/make_audio.py 依 narration.json 產生）
    範圍邊界：只用正整數邊長探索；不證明定理，以面積觀察建立直觀。
    ============================================================ */
 window.DECK = window.DECK || [];
@@ -14,18 +15,57 @@ window.DECK = window.DECK || [];
   const TX = (x, y, s, o = {}) =>
     `<text x="${x}" y="${y}" ${o.anchor ? `text-anchor="${o.anchor}"` : ''} font-size="${o.fs || 30}" font-weight="${o.fw || 800}" fill="${o.c || '#172033'}">${s}</text>`;
 
-  // 2-2 示範圖：兩股 6（直立）、8（水平），每單位 26
+  // 2-1 動畫：3-4-5 直角三角形，每格 22；直角在原點，股 3 沿 x 軸、股 4 沿 y 軸（數學座標，y 向上）
+  const U = 22, OX = 98, OY = 168;
+  const Q = (x, y) => [+(OX + x * U).toFixed(1), +(OY - y * U).toFixed(1)];
+  const lerp = (p, q, t) => [+(p[0] + (q[0] - p[0]) * t).toFixed(1), +(p[1] + (q[1] - p[1]) * t).toFixed(1)];
+  // 邊長 n 格的正方形：從 p0 沿 e1 走 n 格、沿 e2（向外）長出 n×k 格；e1、e2 為數學座標中一格的向量
+  function gridSq(p0, e1, e2, n, color, fill, k) {
+    const P = (i, j) => Q(p0[0] + e1[0] * i + e2[0] * j * k, p0[1] + e1[1] * i + e2[1] * j * k);
+    let s = SV.poly([P(0, 0), P(n, 0), P(n, n), P(0, n)], fill, color, 2.5);
+    for (let t = 1; t < n; t++) s += SV.seg(...P(t, 0), ...P(t, n), color, 1) + SV.seg(...P(0, t), ...P(n, t), color, 1);
+    return s;
+  }
+
+  // 2-3 示範圖：兩股 6（直立）、8（水平），每單位 26
   const Cp = [70, 222], Bp = [278, 222], Ap = [70, 66];
 
   window.DECK.push({
     ch: 2,
     time: "5–15 分鐘",
-    title: "核心概念講解與示範",
+    title: "看動畫，發現新規律",
     color: C,
-    sections: ["2-1 概念探索", "2-2 示範例題", "2-3 理解檢查"],
+    sections: ["2-1 粵語動畫", "2-2 動手探索", "2-3 跟著做一次", "2-4 快問快答"],
     slides: [
       {
-        sec: '2-1', secName: '概念探索',
+        sec: '2-1', secName: '粵語動畫',
+        title: '看動畫：三個正方形的秘密',
+        points: ['按 ▶ 播放，留意格子數目。', '看完說說：你發現了什麼？'],
+        visual: (h) => LS.anim(h, {
+          vb: '0 0 440 250',
+          scenes: [
+            { say: '呢個係直角三角形。兩條短邊叫「股」，最長嗰條叫「斜邊」。', audio: 'audio/s1.mp3', dur: 6,
+              d: k => SV.poly([Q(0, 0), Q(3, 0), Q(0, 4)], '#fff', '#172033', 2) + SV.rightAngle(...Q(0, 0), 0, 90, 12, '#172033')
+                + SV.seg(...Q(0, 0), ...Q(3, 0), BLU, 5) + SV.seg(...Q(0, 0), ...Q(0, 4), BLU, 5)
+                + SV.seg(...Q(3, 0), ...lerp(Q(3, 0), Q(0, 4), k), RED, 5)
+                + TX(262, 48, '短邊：股', { c: BLU }) + (k > 0.5 ? TX(262, 92, '長邊：斜邊', { c: RED }) : '') },
+            { say: '喺兩條股上面砌正方形：一個有 9 格，一個有 16 格。', audio: 'audio/s2.mp3', dur: 6,
+              d: k => gridSq([0, 0], [1, 0], [0, -1], 3, BLU, 'rgba(37,99,235,.14)', k)
+                + gridSq([0, 0], [0, 1], [-1, 0], 4, GRN, 'rgba(5,150,105,.14)', k)
+                + (k > 0.7 ? TX(...Q(1.5, -1.5).map((v, i) => v + [0, 10][i]), '9', { c: BLU, anchor: 'middle' })
+                  + TX(...Q(-2, 2).map((v, i) => v + [0, 10][i]), '16', { c: GRN, anchor: 'middle' }) : '') },
+            { say: '再喺斜邊上面砌正方形，數吓，有 25 格。', audio: 'audio/s3.mp3', dur: 6,
+              d: k => gridSq([3, 0], [-0.6, 0.8], [0.8, 0.6], 5, RED, 'rgba(225,29,72,.10)', k)
+                + (k > 0.7 ? TX(...Q(3.5, 3.5).map((v, i) => v + [0, 10][i]), '25', { c: RED, anchor: 'middle' }) : '') },
+            { say: '9 加 16，啱啱好等於 25！', audio: 'audio/s4.mp3', dur: 4,
+              d: k => TX(350, 190, '9 + 16 = 25', { anchor: 'middle' }) },
+            { say: '所以 a² ＋ b² ＝ c²，呢個就係畢氏定理。', audio: 'audio/s5.mp3', dur: 5,
+              d: k => TX(350, 238, 'a² + b² = c²', { c: RED, fs: 32, anchor: 'middle' }) }
+          ]
+        })
+      },
+      {
+        sec: '2-2', secName: '動手探索',
         title: '三個正方形的面積有什麼關係？',
         points: ['拖 a、b，比較三個正方形。', '哪個等式一直成立？'],
         visual: (h) => {
@@ -73,8 +113,8 @@ window.DECK = window.DECK || [];
         }
       },
       {
-        sec: '2-2', secName: '示範例題',
-        title: '示範：兩股 6、8，求斜邊',
+        sec: '2-3', secName: '跟著做一次',
+        title: '跟著做：兩股 6、8，求斜邊',
         formula: { label: '畢氏定理', tex: 'a^2+b^2=c^2' },
         points: ['每一步說出理由；範例改成求股。'],
         visual: (h) => {
@@ -91,9 +131,9 @@ window.DECK = window.DECK || [];
         example: { q: '斜邊 10、一股 6，求另一股 b。', steps: ['\\(6^2+b^2=10^2\\)', '\\(b^2=100-36=64\\)', '\\(b=8\\)'], ans: '\\(b=8\\)' }
       },
       {
-        sec: '2-3', secName: '理解檢查',
-        title: '理解檢查：斜邊是多少？',
-        points: ['用手勢比 A～D，全班同時作答。', '超過三成選錯，回到 2-2 再講。'],
+        sec: '2-4', secName: '快問快答',
+        title: '快問快答：斜邊是多少？',
+        points: ['想好再比手勢，全班一起出。', '說說看：其他選項錯在哪裡？'],
         visual: (h) => LS.check(h, {
           q: '直角三角形兩股 5、12，斜邊是？',
           options: [
