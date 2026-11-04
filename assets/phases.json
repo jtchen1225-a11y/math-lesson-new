@@ -8,13 +8,13 @@
     {"time": "5–8 分鐘", "title": "懸念時刻：你猜得到嗎？", "teacher_title": "情境引入＋設置懸念（短片、趣味情境或謎題）", "sections": [
       {"code": "2-1", "name": "猜一猜", "kind": "hook"}
     ]},
-    {"time": "8–15 分鐘", "title": "看動畫，發現新規律", "teacher_title": "核心概念講解與示範", "sections": [
+    {"time": "8–17 分鐘", "title": "看動畫，發現新規律", "teacher_title": "核心概念講解與示範", "sections": [
       {"code": "3-1", "name": "粵語動畫", "kind": "anim"},
       {"code": "3-2", "name": "動手探索", "kind": "slider"},
       {"code": "3-3", "name": "跟著做一次", "kind": "stepper"},
       {"code": "3-4", "name": "快問快答", "kind": "check"}
     ]},
-    {"time": "15–25 分鐘", "title": "輪到你出手：闖關練習", "teacher_title": "學生獨立嘗試＋教師巡視", "sections": [
+    {"time": "17–25 分鐘", "title": "輪到你出手：闖關練習", "teacher_title": "學生獨立嘗試＋教師巡視", "sections": [
       {"code": "4-1", "name": "專注闖關", "kind": "drill"}
     ]},
     {"time": "25–35 分鐘", "title": "抓錯偵探＋升級挑戰", "teacher_title": "典型錯誤分析＋分層練習", "sections": [
