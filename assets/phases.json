@@ -5,24 +5,25 @@
       {"code": "1-1", "name": "今天的任務", "kind": "goals"},
       {"code": "1-2", "name": "熱身題", "kind": "tasks"}
     ]},
-    {"time": "5–15 分鐘", "title": "看動畫，發現新規律", "teacher_title": "核心概念講解與示範", "sections": [
-      {"code": "2-1", "name": "粵語動畫", "kind": "anim"},
-      {"code": "2-2", "name": "動手探索", "kind": "slider"},
-      {"code": "2-3", "name": "跟著做一次", "kind": "stepper"},
-      {"code": "2-4", "name": "快問快答", "kind": "check"}
+    {"time": "5–8 分鐘", "title": "懸念時刻：你猜得到嗎？", "teacher_title": "情境引入＋設置懸念（短片、趣味情境或謎題）", "sections": [
+      {"code": "2-1", "name": "猜一猜", "kind": "hook"}
+    ]},
+    {"time": "8–15 分鐘", "title": "看動畫，發現新規律", "teacher_title": "核心概念講解與示範", "sections": [
+      {"code": "3-1", "name": "粵語動畫", "kind": "anim"},
+      {"code": "3-2", "name": "動手探索", "kind": "slider"},
+      {"code": "3-3", "name": "跟著做一次", "kind": "stepper"},
+      {"code": "3-4", "name": "快問快答", "kind": "check"}
     ]},
     {"time": "15–25 分鐘", "title": "輪到你出手：闖關練習", "teacher_title": "學生獨立嘗試＋教師巡視", "sections": [
-      {"code": "3-1", "name": "選擇你的挑戰", "kind": "tiers"},
-      {"code": "3-2", "name": "闖關練習", "kind": "tasks"},
-      {"code": "3-3", "name": "專注時間", "kind": "timer"}
+      {"code": "4-1", "name": "專注闖關", "kind": "drill"}
     ]},
     {"time": "25–35 分鐘", "title": "抓錯偵探＋升級挑戰", "teacher_title": "典型錯誤分析＋分層練習", "sections": [
-      {"code": "4-1", "name": "抓錯偵探", "kind": "mistake"},
-      {"code": "4-2", "name": "升級挑戰", "kind": "tasks"}
+      {"code": "5-1", "name": "抓錯偵探", "kind": "mistake"},
+      {"code": "5-2", "name": "升級挑戰", "kind": "tasks"}
     ]},
     {"time": "35–40 分鐘", "title": "最後一關：出口挑戰", "teacher_title": "出口題＋當堂回饋", "sections": [
-      {"code": "5-1", "name": "出口挑戰", "kind": "exit"},
-      {"code": "5-2", "name": "今天的收穫", "kind": "goals"}
+      {"code": "6-1", "name": "出口挑戰", "kind": "exit"},
+      {"code": "6-2", "name": "今天的收穫", "kind": "goals"}
     ]}
   ]
 }
