@@ -7,46 +7,75 @@ window.DECK = window.DECK || [];
 (function () {
   const C = "#d97706";
 
-  window.DECK.push({
-    ch: 5,
-    time: "26–35 分鐘",
-    title: "抓錯偵探＋升級挑戰",
-    color: C,
-    sections: ["5-1 抓錯偵探", "5-2 再抓一次", "5-3 升級挑戰"],
-    slides: [
-      {
-        sec: '5-1', secName: '抓錯偵探',
-        title: '抓錯偵探：哪一步出了問題？',
-        points: ['答案比斜邊還長，合理嗎？', '怎樣先判斷哪邊是斜邊？'],
-        visual: (h) => LS.mistake(h, {
+  // 拆頁：題目頁（stage: ask）與解說頁（stage: explain）共用同一份資料
+  const P_5_1 = {
           q: '斜邊 13、一直角邊 5，求另一直角邊 b。',
           steps: ['\\(b^2=13^2+5^2\\)', '\\(b^2=169+25=194\\)', '\\(b=\\sqrt{194}\\)'],
           wrong: 0,
           why: '概念錯誤：13 是斜邊，要用減法。',
           fix: '\\(b^2=13^2-5^2=144\\)，\\(b=12\\)'
-        })
-      },
-      {
-        sec: '5-2', secName: '再抓一次',
-        title: '抓錯偵探：這次又錯在哪？',
-        points: ['算到最後一步了嗎？', '答案合理嗎？'],
-        visual: (h) => LS.mistake(h, {
+        };
+  const P_5_2 = {
           q: '兩直角邊 8、6，求斜邊 c。',
           steps: ['\\(c^2=8^2+6^2\\)', '\\(c^2=64+36=100\\)', '\\(c=100\\)'],
           wrong: 2,
           why: '程序錯誤：\\(c^2=100\\) 之後還要開方。',
           fix: '\\(c=\\sqrt{100}=10\\)'
-        })
+        };
+  const P_5_3 = [
+          { tier: 'A', q: '兩直角邊 8、15，求斜邊。', hints: ['\\(64+225=289\\)'], ans: '17' },
+          { tier: 'B', q: '長方形長 12、寬 5，對角線多長？', hints: ['對角線把長方形分成兩個直角三角形。'], ans: '13' },
+          { tier: 'C', q: '梯子長 2.5 m，底端離牆 0.7 m，梯頂離地多高？', hints: ['梯子是斜邊。'], ans: '2.4 m' }
+        ];
+
+  window.DECK.push({
+    ch: 5,
+    time: "26–35 分鐘",
+    title: "抓錯偵探＋升級挑戰",
+    color: C,
+    sections: ["5-1 抓錯偵探", "5-1-2 抓錯偵探", "5-2 再抓一次", "5-2-2 再抓一次", "5-3 升級挑戰", "5-3-2 升級挑戰", "5-3-3 升級挑戰"],
+    slides: [
+      {
+        sec: '5-1', secName: '抓錯偵探',
+        title: '抓錯偵探：哪一步出了問題？',
+        points: ['答案比斜邊還長，合理嗎？', '怎樣先判斷哪邊是斜邊？'],
+        visual: (h) => LS.mistake(h, { ...P_5_1, stage: 'ask' })
+      },
+      {
+        sec: '5-1-2', secName: '抓錯偵探',
+        title: '抓錯偵探：哪一步出了問題？（解析）',
+        points: ['想一想：下次怎樣避免？'],
+        visual: (h) => LS.mistake(h, { ...P_5_1, q: null, stage: 'explain' })
+      },
+      {
+        sec: '5-2', secName: '再抓一次',
+        title: '抓錯偵探：這次又錯在哪？',
+        points: ['算到最後一步了嗎？', '答案合理嗎？'],
+        visual: (h) => LS.mistake(h, { ...P_5_2, stage: 'ask' })
+      },
+      {
+        sec: '5-2-2', secName: '再抓一次',
+        title: '抓錯偵探：這次又錯在哪？（解析）',
+        points: ['想一想：下次怎樣避免？'],
+        visual: (h) => LS.mistake(h, { ...P_5_2, q: null, stage: 'explain' })
       },
       {
         sec: '5-3', secName: '升級挑戰',
         title: '升級挑戰：換個情境也能用',
         points: ['先畫出直角三角形。', '標出斜邊再列式。'],
-        visual: (h) => LS.tasks(h, [
-          { tier: 'A', q: '兩直角邊 8、15，求斜邊。', hints: ['\\(64+225=289\\)'], ans: '17' },
-          { tier: 'B', q: '長方形長 12、寬 5，對角線多長？', hints: ['對角線把長方形分成兩個直角三角形。'], ans: '13' },
-          { tier: 'C', q: '梯子長 2.5 m，底端離牆 0.7 m，梯頂離地多高？', hints: ['梯子是斜邊。'], ans: '2.4 m' }
-        ])
+        visual: (h) => LS.tasks(h, P_5_3, { stage: 'ask' })
+      },
+      {
+        sec: '5-3-2', secName: '升級挑戰',
+        title: '提示與答案（A、B 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_5_3.slice(0, 2), { stage: 'explain' })
+      },
+      {
+        sec: '5-3-3', secName: '升級挑戰',
+        title: '提示與答案（C 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_5_3.slice(2, 3), { stage: 'explain' })
       }
     ]
   });

@@ -7,12 +7,28 @@ window.DECK = window.DECK || [];
 (function () {
   const C = "#2563eb";
 
+  // 拆頁：題目頁（stage: ask）與解說頁（stage: explain）共用同一份資料
+  const P_1_2 = [
+          { tier: 'A', q: '計算 \\(3^2+4^2\\) 和 \\(5^2\\)。', hints: ['\\(3^2=3\\times3=9\\)。'], ans: '都是 25，兩者相等' },
+          { tier: 'B', q: '計算 \\(6^2+8^2\\)，它是哪個整數的平方？', hints: ['先算 \\(36+64\\)。'], ans: '\\(100=10^2\\)' },
+          { tier: 'C', q: '找三個整數 a、b、c，使 \\(a^2+b^2=c^2\\)（不用 3、4、5）。', ans: '例：5、12、13 或 6、8、10' }
+        ];
+  const P_1_3 = {
+          q: '\\(c^2=49\\)，c 是邊長，c 等於？',
+          options: [
+            { t: '7', ok: true, why: '\\(7^2=49\\)，邊長取正數' },
+            { t: '24.5', why: '概念錯誤：把開方當成除以 2' },
+            { t: '49', why: '程序錯誤：忘了開方' },
+            { t: '\\(-7\\)', why: '邊長不能是負數' }
+          ]
+        };
+
   window.DECK.push({
     ch: 1,
     time: "0–5 分鐘",
     title: "熱身挑戰：先動手算一算",
     color: C,
-    sections: ["1-1 今天的任務", "1-2 熱身題", "1-3 舊知識快問"],
+    sections: ["1-1 今天的任務", "1-2 熱身題", "1-2-2 熱身題", "1-2-3 熱身題", "1-3 舊知識快問", "1-3-2 舊知識快問"],
     slides: [
       {
         sec: '1-1', secName: '今天的任務',
@@ -27,25 +43,31 @@ window.DECK = window.DECK || [];
         sec: '1-2', secName: '熱身題',
         title: '熱身題：算一算，有甚麼發現？',
         points: ['先自己算，馬上開始。', '做完 B 層再挑戰 C 層。'],
-        visual: (h) => LS.tasks(h, [
-          { tier: 'A', q: '計算 \\(3^2+4^2\\) 和 \\(5^2\\)。', hints: ['\\(3^2=3\\times3=9\\)。'], ans: '都是 25，兩者相等' },
-          { tier: 'B', q: '計算 \\(6^2+8^2\\)，它是哪個整數的平方？', hints: ['先算 \\(36+64\\)。'], ans: '\\(100=10^2\\)' },
-          { tier: 'C', q: '找三個整數 a、b、c，使 \\(a^2+b^2=c^2\\)（不用 3、4、5）。', ans: '例：5、12、13 或 6、8、10' }
-        ])
+        visual: (h) => LS.tasks(h, P_1_2, { stage: 'ask' })
+      },
+      {
+        sec: '1-2-2', secName: '熱身題',
+        title: '提示與答案（A、B 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_1_2.slice(0, 2), { stage: 'explain' })
+      },
+      {
+        sec: '1-2-3', secName: '熱身題',
+        title: '提示與答案（C 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_1_2.slice(2, 3), { stage: 'explain' })
       },
       {
         sec: '1-3', secName: '舊知識快問',
         title: '舊知識快問：開方還記得嗎？',
         points: ['想好再比手勢。', '等一下要用到開方。'],
-        visual: (h) => LS.check(h, {
-          q: '\\(c^2=49\\)，c 是邊長，c 等於？',
-          options: [
-            { t: '7', ok: true, why: '\\(7^2=49\\)，邊長取正數' },
-            { t: '24.5', why: '概念錯誤：把開方當成除以 2' },
-            { t: '49', why: '程序錯誤：忘了開方' },
-            { t: '\\(-7\\)', why: '邊長不能是負數' }
-          ]
-        })
+        visual: (h) => LS.check(h, { ...P_1_3, stage: 'ask' })
+      },
+      {
+        sec: '1-3-2', secName: '舊知識快問',
+        title: '舊知識快問：開方還記得嗎？（解說）',
+        points: [P_1_3.q],
+        visual: (h) => LS.check(h, { ...P_1_3, stage: 'explain', q: null })
       }
     ]
   });

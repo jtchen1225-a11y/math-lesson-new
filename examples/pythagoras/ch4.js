@@ -8,35 +8,63 @@ window.DECK = window.DECK || [];
 (function () {
   const C = "#059669";
 
-  window.DECK.push({
-    ch: 4,
-    time: "18–26 分鐘",
-    title: "輪到你出手：闖關練習",
-    color: C,
-    sections: ["4-1 專注闖關", "4-2 合理嗎？"],
-    slides: [
-      {
-        sec: '4-1', secName: '專注闖關',
-        title: '專注 6 分鐘：選一層開始闖關',
-        points: ['先找斜邊，再列式。', '卡住先按提示，做完往上挑戰。'],
-        visual: (h) => LS.tasks(h, [
+  // 拆頁：題目頁（stage: ask）與解說頁（stage: explain）共用同一份資料
+  const P_4_1 = [
           { tier: 'A', q: '兩直角邊 9、12，求斜邊。', hints: ['斜邊在直角的對面。', '\\(c^2=9^2+12^2\\)', '\\(81+144=225\\)'], ans: '15' },
           { tier: 'B', q: '斜邊 17、一直角邊 8，求另一邊。', hints: ['已知斜邊，要用減的。', '\\(b^2=17^2-8^2\\)'], ans: '15' },
           { tier: 'C', q: '兩直角邊都是 1，斜邊介於哪兩個整數之間？', hints: ['先求 \\(c^2\\)。'], ans: '\\(c=\\sqrt{2}\\)；\\(1<\\sqrt{2}<2\\)' }
-        ], { timer: 6, watch: ['找錯斜邊（概念）', '已知斜邊仍用加法（概念）', '忘了開方（程序）', '平方算成乘 2（先備或粗心）'] })
-      },
-      {
-        sec: '4-2', secName: '合理嗎？',
-        title: '合理嗎？先用常識檢查',
-        points: ['斜邊一定是最長的邊。', '算完先看合不合理。'],
-        visual: (h) => LS.check(h, {
+        ];
+  const P_4_2 = {
           q: '兩直角邊 9、12，哪個斜邊一定不合理？',
           options: [
             { t: '10', ok: true, why: '斜邊要比 12 長，10 太短' },
             { t: '14', why: '比 12 長，看來合理，但要計算才知對錯' },
             { t: '15', why: '\\(81+144=225\\)，15 正是答案' }
           ]
-        })
+        };
+
+  window.DECK.push({
+    ch: 4,
+    time: "18–26 分鐘",
+    title: "輪到你出手：闖關練習",
+    color: C,
+    sections: ["4-1 專注闖關", "4-1-2 專注闖關", "4-1-3 專注闖關", "4-1-4 專注闖關", "4-2 合理嗎？", "4-2-2 合理嗎？"],
+    slides: [
+      {
+        sec: '4-1', secName: '專注闖關',
+        title: '專注 6 分鐘：選一層開始闖關',
+        points: ['先找斜邊，再列式。', '卡住先按提示，做完往上挑戰。'],
+        visual: (h) => LS.tasks(h, P_4_1, { stage: 'ask', timer: 6, watch: ['找錯斜邊（概念）', '已知斜邊仍用加法（概念）', '忘了開方（程序）', '平方算成乘 2（先備或粗心）'] })
+      },
+      {
+        sec: '4-1-2', secName: '專注闖關',
+        title: '提示與答案（A 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_4_1.slice(0, 1), { stage: 'explain' })
+      },
+      {
+        sec: '4-1-3', secName: '專注闖關',
+        title: '提示與答案（B 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_4_1.slice(1, 2), { stage: 'explain' })
+      },
+      {
+        sec: '4-1-4', secName: '專注闖關',
+        title: '提示與答案（C 層）',
+        points: ['先自己試，卡住才開提示。'],
+        visual: (h) => LS.tasks(h, P_4_1.slice(2, 3), { stage: 'explain' })
+      },
+      {
+        sec: '4-2', secName: '合理嗎？',
+        title: '合理嗎？先用常識檢查',
+        points: ['斜邊一定是最長的邊。', '算完先看合不合理。'],
+        visual: (h) => LS.check(h, { ...P_4_2, stage: 'ask' })
+      },
+      {
+        sec: '4-2-2', secName: '合理嗎？',
+        title: '合理嗎？先用常識檢查（解說）',
+        points: [P_4_2.q],
+        visual: (h) => LS.check(h, { ...P_4_2, stage: 'explain', q: null })
       }
     ]
   });
